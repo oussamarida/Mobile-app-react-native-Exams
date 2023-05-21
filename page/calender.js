@@ -1,11 +1,16 @@
 import { StatusBar } from "expo-status-bar";
 import { useEffect, useState } from "react";
-import { ActivityIndicator, Button, ScrollView, TouchableOpacity } from "react-native";
+import {
+  ActivityIndicator,
+  Button,
+  ScrollView,
+  TouchableOpacity,
+} from "react-native";
 import { StyleSheet, View, Text } from "react-native";
 import { Calendar } from "react-native-calendars";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import Icon2 from "react-native-vector-icons/Ionicons";
-import apiUrl from './api/url'
+import apiUrl from "./api/url";
 
 function formatDateString(dateString) {
   if (!dateString) {
@@ -18,7 +23,6 @@ export default function Calendary({ navigation, route }) {
   const { user } = route.params;
   const [allsalle, setallsalle] = useState([]);
   const [loading, setLoading] = useState(true);
-  
 
   useEffect(() => {
     const fetchData = async () => {
@@ -37,12 +41,9 @@ export default function Calendary({ navigation, route }) {
     fetchData();
   }, []);
 
-
   if (loading) {
     return <ActivityIndicator />;
   }
-
-
 
   return (
     <>
@@ -55,27 +56,59 @@ export default function Calendary({ navigation, route }) {
             }}
           >
             {loading ? (
-             <ActivityIndicator />
+              <ActivityIndicator />
             ) : (
               allsalle.map((item) => (
-                <TouchableOpacity style={styles.day} key={item.exam.id} onPress={() => navigation.navigate("Etudiant", { item: item, user: user.id })}>
-                <View style={{ flex: 2.6, borderRadius: 20, backgroundColor: "#2E1D73" }}  key={item.exam.id}>
-                    
-                    <Text style={[styles.heure, { color: "white", marginLeft: 5 }]}><Text style={{ fontSize: 16, fontWeight: "normal" }}>Date:   </Text>{formatDateString(item.exam.date)}</Text>
+                <TouchableOpacity
+                  style={styles.day}
+                  key={item.exam.id}
+                  onPress={() =>
+                    navigation.navigate("Etudiant", {
+                      item: item,
+                      user: user.id,
+                    })
+                  }
+                >
+                  <View
+                    style={{
+                      flex: 2.6,
+                      borderRadius: 20,
+                      backgroundColor: "#2E1D73",
+                    }}
+                    key={item.exam.id}
+                  >
+                    <Text
+                      style={[styles.heure, { color: "white", marginLeft: 5 }]}
+                    >
+                      <Text style={{ fontSize: 16, fontWeight: "normal" }}>
+                        Date:{" "}
+                      </Text>
+                      {formatDateString(item.exam.date)}
+                    </Text>
                   </View>
-                  <View style={{ flex: 4.2}} key={item.exam.id}>
-                    <Text style={[styles.heure , {fontSize:16}]}>
-                     <Text style={{ fontSize: 13, fontWeight: "normal" }}>{item.exam.time}</Text>
+                  <View style={{ flex: 4.2 }} key={item.exam.id}>
+                    <Text style={[styles.heure, { fontSize: 16 }]}>
+                      <Text style={{ fontSize: 13, fontWeight: "normal" }}>
+                        {item.exam.time}
+                      </Text>
                     </Text>
                     <Icon2
                       name="ios-time"
                       style={{ marginLeft: 30, color: "black", fontSize: 20 }}
                     ></Icon2>
-                    <Text style={[styles.heure, { color: "black", marginLeft: 5 , fontSize:18}]}>
-                    <Text style={{ fontSize: 15, fontWeight: "normal" }}>{item.exam.matiere.nom}</Text>
+                    <Text
+                      style={[
+                        styles.heure,
+                        { color: "black", marginLeft: 5, fontSize: 18 },
+                      ]}
+                    >
+                      <Text style={{ fontSize: 15, fontWeight: "normal" }}>
+                        {item.exam.matiere.nom}
+                      </Text>
                     </Text>
                   </View>
-                  <View key={item.exam.id}
+                  <View
+                    key={item.exam.id}
                     style={{
                       flex: 5,
                       flexDirection: "row",
@@ -131,7 +164,7 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 120,
     flexDirection: "row",
-    marginBottom:10,
+    marginBottom: 10,
   },
   heure: {
     flex: 1,

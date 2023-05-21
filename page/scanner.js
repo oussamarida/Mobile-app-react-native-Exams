@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import Icon from "react-native-vector-icons/FontAwesome";
-import apiUrl from "../api/url";
-import { color } from 'react-native-elements/dist/helpers';
+import apiUrl from "./api/url";
 
 
 const Scannercode = ({ navigation, route }) => {
