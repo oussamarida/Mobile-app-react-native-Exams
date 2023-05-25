@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import {
   ActivityIndicator,
   Button,
+  Dimensions,
+  FlatList,
   ScrollView,
   TouchableOpacity,
 } from "react-native";
@@ -17,8 +19,9 @@ function formatDateString(dateString) {
     return "";
   }
 
-  return dateString.replace(/\//g, "      ");
+  return dateString.replace(/\//g, "/");
 }
+const numColumns = 2;
 export default function Calendary({ navigation, route }) {
   const { user } = route.params;
   const [allsalle, setallsalle] = useState([]);
@@ -45,150 +48,149 @@ export default function Calendary({ navigation, route }) {
     return <ActivityIndicator />;
   }
 
-  return (
-    <>
-      <View style={[styles.container, { flexDirection: "column" }]}>
-        <View style={styles.body}>
-          <ScrollView
-            style={{
-              flexDirection: "column",
-              paddingBottom: 40,
-            }}
-          >
-            {loading ? (
-              <ActivityIndicator />
-            ) : (
-              allsalle.map((item) => (
-                <TouchableOpacity
-                  style={styles.day}
-                  key={item.exam.id}
+  renderItem = ({ item, index }) => {
+    if (item.empty === true) {
+      return <View style={[style2.item, styles.itemInvisible]} />;
+    }
+    return (
+      <TouchableOpacity style={style2.item}
+      key={item.exam.id}
                   onPress={() =>
                     navigation.navigate("Etudiant", {
                       item: item,
                       user: user.id,
                     })
                   }
-                >
-                  <View
-                    style={{
-                      flex: 2.6,
-                      borderRadius: 20,
-                      backgroundColor: "#2E1D73",
-                    }}
-                    key={item.exam.id}
-                  >
-                    <Text
-                      style={[styles.heure, { color: "white", marginLeft: 5 }]}
-                    >
-                      <Text style={{ fontSize: 16, fontWeight: "normal" }}>
-                        Date:{" "}
-                      </Text>
-                      {formatDateString(item.exam.date)}
-                    </Text>
-                  </View>
-                  <View style={{ flex: 4.2 }} key={item.exam.id}>
-                    <Text style={[styles.heure, { fontSize: 16 }]}>
-                      <Text style={{ fontSize: 13, fontWeight: "normal" }}>
-                        {item.exam.time}
-                      </Text>
-                    </Text>
-                    <Icon2
-                      name="ios-time"
-                      style={{ marginLeft: 30, color: "black", fontSize: 20 }}
-                    ></Icon2>
-                    <Text
-                      style={[
-                        styles.heure,
-                        { color: "black", marginLeft: 5, fontSize: 18 },
-                      ]}
-                    >
-                      <Text style={{ fontSize: 15, fontWeight: "normal" }}>
-                        {item.exam.matiere.nom}
-                      </Text>
-                    </Text>
-                  </View>
-                  <View
-                    key={item.exam.id}
-                    style={{
-                      flex: 5,
-                      flexDirection: "row",
-                      padding: 30,
-                      justifyContent: "space-evenly",
-                    }}
-                  >
-                    <Icon name="door" style={styles.icon}></Icon>
-                    <Text style={styles.heure}>{item.name}</Text>
-                  </View>
-                </TouchableOpacity>
-              ))
+      >
+        <View
+          style={{
+            flexDirection: "column",
+            flex: 1,
+            justifyContent: "space-around",
+          }}
+        >
+          <View style={style2.horairee}>
+          <View style={style2.horairee2}>
+            <Icon2 name="calendar" style={{ color: "black", fontSize: 17 }}></Icon2>
+            <Text  style={{ fontWeight: "bold" , fontSize:17 }}>{item.exam.date}</Text>
+            </View>
+            <View style={style2.horairee2}>
+            <Icon2 name="ios-time" style={{ color: "black", fontSize: 17 }}></Icon2>
+            <Text  style={{ fontWeight: "bold" , fontSize:17 }}>{item.exam.time}</Text>
+            </View>
+          </View>
+          <View
+            style={style2.Infor}
+          >
+            <Text style={{ fontWeight: "bold" , fontSize:20,color:"white" }}>{item.exam.matiere.nom}</Text>
+            <Text style={{ fontWeight: "bold" , fontSize:20 , color:"white"}}>{item.name}</Text>
+          </View>
+        </View>
+      </TouchableOpacity>
+    );
+  };
+
+  return (
+      <View style={[styles.container, { flexDirection: "column" }]}>
+        <View style={styles.body}>
+          <View
+            style={{
+              flexDirection: "column",
+            }}
+            >
+            <View style={{ backgroundColor:'#2E1D73' , borderRadius:20 , marginBottom:20 , margin:10}}>
+              <Text style={{ fontSize: 50, marginLeft: "25%" , color:"white" }}>Calendar</Text>
+            </View>
+            {loading ? (
+              <ActivityIndicator />
+            ) : (
+              <FlatList
+                data={formatData(allsalle, numColumns)}
+                style={style2.container}
+                renderItem={this.renderItem}
+                numColumns={numColumns}
+              />
             )}
-            <View style={{ height: 50, width: 10 }}></View>
-          </ScrollView>
+          </View>
         </View>
       </View>
-    </>
   );
 }
+
+const style2 = StyleSheet.create({
+  
+  item: {
+    flex: 1,
+    backgroundColor: "white",
+    flex: 1,
+    margin: 1,
+    height: Dimensions.get("window").width / numColumns, // approximate a square
+    shadowOffset: {
+      width: 3,
+      height: 3,
+    },
+    shadowColor: "black", // Add the shadow color here
+    elevation: 30,
+    shadowOpacity: 0.6,
+    shadowRadius: 10,
+    borderRadius: 20,
+    padding:5,
+  },
+  Infor:{
+    flexDirection: "row",
+    flex: 1,
+    backgroundColor:"#2E1D73",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingLeft: 10,
+    paddingRight: 10,   
+    shadowOffset: {
+      width: 3,
+      height: 3,
+    },
+    elevation: 30,
+    shadowRadius: 10,
+    borderRadius: 20,
+    marginRight: 3,
+    marginBottom: 3,
+  },
+  horairee:{
+    flexDirection: 'column',
+    flex: 1,
+    backgroundColor:"white",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },horairee2:{
+    flexDirection: 'row',
+    flex: 1,
+    backgroundColor:"white",
+    justifyContent: "space-between",
+    alignItems: "center",
+  }
+});
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "white",
-    padding: 10,
+    backgroundColor: "Transparent",
   },
   body: {
-    flex: 1.3,
+    flex: 1,
     borderRadius: 30,
     backgroundColor: "white",
-    shadowOffset: {
-      width: 3,
-      height: 3,
-    },
-    elevation: 30,
-    shadowOpacity: 0.19,
-    shadowRadius: 10,
-    width: "100%",
-    height: "100%",
-  },
-  day: {
-    flex: 1,
-    borderRadius: 20,
-    backgroundColor: "white",
-    shadowOffset: {
-      width: 3,
-      height: 3,
-    },
-    elevation: 30,
-    shadowOpacity: 0.19,
-    shadowRadius: 10,
-    width: "100%",
-    height: 120,
-    flexDirection: "row",
-    marginBottom: 10,
-  },
-  heure: {
-    flex: 1,
-    marginLeft: "10%",
-    fontSize: 20,
-    marginTop: 15,
-    fontWeight: "bold",
-  },
-  tach: {
-    flex: 2,
-    backgroundColor: "white",
-    alignSelf: "center",
-    justifyContent: "center",
-    height: 120,
-    shadowOffset: {
-      width: 3,
-      height: 3,
-    },
-    elevation: 30,
-    shadowOpacity: 0.19,
-    shadowRadius: 10,
-  },
-  icon: {
-    color: "black",
-    fontSize: 50,
   },
 });
+
+const formatData = (data, numColumns) => {
+  const numberOfFullRows = Math.floor(data.length / numColumns);
+
+  let numberOfElementsLastRow = data.length - numberOfFullRows * numColumns;
+  while (
+    numberOfElementsLastRow !== numColumns &&
+    numberOfElementsLastRow !== 0
+  ) {
+    data.push({ key: `blank-${numberOfElementsLastRow}`, empty: true });
+    numberOfElementsLastRow++;
+  }
+  return data;
+};

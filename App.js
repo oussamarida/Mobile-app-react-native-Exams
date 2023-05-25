@@ -5,7 +5,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Dashbord from './page/dashboard';
 import Calendary from './page/calender';
-import Scannercode from './page/test/scanner';
+import Scannercode from './page/scanner';
 import Profile from './page/Profileupdate';
 import Etudiant from './page/Etudiant';
 
@@ -29,7 +29,7 @@ export default function App() {
           <Stack.Screen
           name="Calendary"
           component={Calendary}
-          options={{title: 'Calendar'}}          
+          options={{title: ' '}}          
         />
             <Stack.Screen
           name="Scannercode"

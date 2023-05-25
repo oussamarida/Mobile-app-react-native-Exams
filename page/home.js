@@ -27,16 +27,14 @@ export default function HomeScreen({ navigation }) {
 
 
    const handleSubmit = () => {
-    const foundUser = allUser.find(u => u.email === user && u.password === password);
-   //const foundUser={"cne": "HH77077", "code": 1, "email": "aussamarida@gmail.com", "id": 151, "nom": "Oussama", "password": "12", "prenom": "Rida"}
-    if (foundUser) {
+ const foundUser = allUser.find(u => u.email === user && u.password === password);
+  if (foundUser) {
       onChangeUser('')
       onChangePassword("")
       navigation.navigate('Dashbord',{user:foundUser});
-    } else {
-    alert("Username or password incorrect");
-   }
-
+    }else {
+      alert("Username or password incorrect");
+    }
   }
 
 
@@ -113,14 +111,14 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.19,
     shadowRadius: 90,
     borderWidth: 0,
-    borderColor: "#8B15FF",
+    borderColor: "#2E1D73",
     borderStyle: "solid",
     borderBottomWidth: 1
   },
   button: {
-    height: 50,
+    height: 60,
     width: "50%",
-    backgroundColor: "#8B15FF",
+    backgroundColor: "#2E1D73",
     borderRadius: 40,
     alignItems: "center",
     justifyContent: "center",

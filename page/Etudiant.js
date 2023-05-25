@@ -44,6 +44,7 @@ export default function Etudiant({ navigation, route }) {
   const [nom, onChangeNom] = useState("");
   const [prenom, onChangeprenom] = useState("");
 
+  //update student
   const Search = () => {
     const searchResult = item.tables.filter(
       (items) => items.etudiant.nom.toLowerCase() === nom.toLowerCase() && items.etudiant.prenom.toLowerCase() === prenom.toLowerCase()
@@ -75,11 +76,16 @@ export default function Etudiant({ navigation, route }) {
         }
       };
       fetchData();
+    }else {
+      setUserNotFound(true);
+      setEtudiant([]); 
     }
-    
   };
 
   const [loading, setLoading] = useState(true);
+
+
+  //get all student
 
   useEffect(() => {
     const fetchData = async () => {
@@ -102,6 +108,7 @@ export default function Etudiant({ navigation, route }) {
     fetchData();
    
   }, []);
+  const [userNotFound, setUserNotFound] = useState(false); 
 
   if (loading) {
     return <ActivityIndicator />;
@@ -233,22 +240,35 @@ export default function Etudiant({ navigation, route }) {
             <TouchableOpacity onPress={Search} style={styles2.containerse}>
               <Text name="search" style={{color:'white',fontSize: 20, fontWeight: "bold" }}>Search</Text>
             </TouchableOpacity>
-            {etudiant && etudiant.etudiant && (
-              <View style={{marginTop:40}}>
+            {etudiant && etudiant.etudiant ? (
+              <View style={{marginTop:40 }}>
+                <View style={{flexDirection:'row' ,justifyContent: "space-between",marginTop: 10 }}>
                 <Text style={{fontWeight:'bold' , fontSize:15}}>Table: {etudiant.num}</Text>
                 <Text style={{fontWeight:'bold' , fontSize:15}}>CNE: {etudiant.etudiant.cne}</Text>
+                </View>
+                <View style={{flexDirection:'row' , justifyContent: "space-between",marginTop: 10 }}>
                 <Text style={{fontWeight:'bold' , fontSize:15}}>ID: {etudiant.etudiant.id}</Text>
                 <Text style={{fontWeight:'bold' , fontSize:15}}>NAPO: {etudiant.etudiant.napo}</Text>
+                </View>
+                <View style={{flexDirection:'row' , justifyContent: "space-between", marginTop: 10}}>
                 <Text style={{fontWeight:'bold' , fontSize:15}}>
-                  Nom: {etudiant.etudiant.nom} {etudiant.etudiant.prenom}
+                  Nom: {etudiant.etudiant.nom}
                 </Text>
+                <Text style={{fontWeight:'bold' , fontSize:15}}>
+                  Prenom:  {etudiant.etudiant.prenom}
+                </Text>
+                </View>
                 <View  style={styles2.check}>
-                <Text style={{marginTop:8,color:'red' ,fontWeight:'bold', fontSize:25}}>
+                <Text style={{marginTop:8,color:'red' ,fontWeight:'bold', fontSize:30, marginTop: 20,marginLeft: 30 }}>
                    Mark Present ✅ 
                 </Text>
                 </View>
               </View>
-            )}
+            ): userNotFound ? (
+              <View style={{ marginTop: 40 }}>
+                <Text>User not in this class</Text>
+              </View>
+            ) : null}
 
             <TouchableOpacity onPress={closeModal} style={styles2.closeButton}>
               <Text style={styles2.closeButtonText}>Close</Text>

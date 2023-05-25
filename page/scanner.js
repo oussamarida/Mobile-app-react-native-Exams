@@ -88,29 +88,29 @@ const Scannercode = ({ navigation, route }) => {
             <View style={styles.information}>
               {scannedData.map((data, index) => (
                 <View key={index}>
-                  <Text style={styles.label}>Etudiant(e):</Text>
+                  <Text style={styles.label}>Etudiant(e) : </Text>
                   <View style={styles.dataRow}>
-                    <Text style={styles.dataLabel}>CNE:</Text>
+                    <Text style={styles.dataLabel}>CNE : </Text>
                     <Text>{data.etudiant.cne}</Text>
                   </View>
                   <View style={styles.dataRow}>
-                    <Text style={styles.dataLabel}>ID:</Text>
+                    <Text style={styles.dataLabel}>ID : </Text>
                     <Text>{data.etudiant.id}</Text>
                   </View>
                   <View style={styles.dataRow}>
-                    <Text style={styles.dataLabel}>Napo:</Text>
+                    <Text style={styles.dataLabel}>Napo : </Text>
                     <Text>{data.etudiant.napo}</Text>
                   </View>
                   <View style={styles.dataRow}>
-                    <Text style={styles.dataLabel}>Nom:</Text>
+                    <Text style={styles.dataLabel}>Nom : </Text>
                     <Text>{data.etudiant.nom}</Text>
                   </View>
                   <View style={styles.dataRow}>
-                    <Text style={styles.dataLabel}>Prenom:</Text>
+                    <Text style={styles.dataLabel}>Prenom : </Text>
                     <Text>{data.etudiant.prenom}</Text>
                   </View>
                   <View style={styles.dataRow}>
-                    <Text style={styles.dataLabel}>Num table:</Text>
+                    <Text style={styles.dataLabel}>Num table : </Text>
                     <Text>{data.num}</Text>
                   </View>
                 </View>

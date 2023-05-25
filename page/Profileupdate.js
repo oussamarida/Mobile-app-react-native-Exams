@@ -65,7 +65,7 @@ export default function Profile({ navigation, route }) {
             <Text style={{ color: "black", fontSize: 25, fontWeight: "bold" }}>
              {user.nom}
             </Text>
-            <Text style={{ color: "black", fontSize: 25, fontWeight: "bold" }}>
+            <Text style={{ marginLeft: 29,color: "black", fontSize: 25, fontWeight: "bold" }}>
              {user.prenom}
             </Text>
             <Text

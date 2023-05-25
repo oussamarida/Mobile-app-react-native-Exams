@@ -11,8 +11,6 @@ export default function Dashbord({ navigation , route }) {
 
  
   const { user } = route.params;
-
-  
   
   function Calendar() {
     navigation.navigate("Calendary",{user:user});
@@ -32,7 +30,10 @@ export default function Dashbord({ navigation , route }) {
         source={require("../assets/backdashbord.png")}
       >
         <View style={styles.header}>
-          <Text style={{ color: "white", fontSize: 30 }}>Dashbord</Text>
+          <Text style={{ color: "white", fontSize: 30  }}>Dashbord</Text>
+          <TouchableOpacity onPress={Logout} >
+            <Icon name="sign-out" style={styles.icon2}></Icon>
+            </TouchableOpacity>
         </View>
         <View style={styles.card}>
           <View style={styles.profil}>
@@ -58,9 +59,7 @@ export default function Dashbord({ navigation , route }) {
             >
               surveillant
             </Text>
-            <TouchableOpacity onPress={Logout} >
-            <Icon name="sign-out" style={styles.icon2}></Icon>
-            </TouchableOpacity>
+            
 
           </View>
         </View>
@@ -145,8 +144,9 @@ const styles = StyleSheet.create({
   },
   header: {
     flex: 3,
-    justifyContent: "center",
     alignItems: "center",
+    flexDirection:"row",
+    justifyContent:"space-between",
   },
   card: {
     flex: 7.9,
@@ -215,8 +215,8 @@ const styles = StyleSheet.create({
     fontSize: 70,
   },
   icon2: {
-    color: "#2E1D73",
-    fontSize: 60,
-    marginLeft:"70%"
+    color: "white",
+    fontSize: 30,
+    // marginLeft:"70%"
   },
 });
